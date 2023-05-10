@@ -23,11 +23,11 @@ jobs:
           set -x -e -o pipefail
           exec 2>&1
           git submodule foreach 'set -x && pwd && git status && git log -n 5'
-      -name: 'Notify componentA of compositeA check start'
-       uses: LouisBrunner/checks-action@v1.6.0
-       with:
-         token: ${{ secrets.ORG_PAT }}
-         name: 'CompositeA: Build & Test CompositeA'
-         repo: 'opensafety/componentA'
-         status: 'in_progress'
-         details_url: 'https://www.github.com/opensafety/compositeA/actions/runs/${{ github.run_id }}'
+      - name: 'Notify componentA of compositeA check start'
+        uses: LouisBrunner/checks-action@v1.6.0
+        with:
+          token: ${{ secrets.ORG_PAT }}
+          name: 'CompositeA: Build & Test CompositeA'
+          repo: 'opensafety/componentA'
+          status: 'in_progress'
+          details_url: 'https://www.github.com/opensafety/compositeA/actions/runs/${{ github.run_id }}'
