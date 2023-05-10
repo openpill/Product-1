@@ -26,7 +26,7 @@ jobs:
       - name: 'Notify componentA of compositeA check start'
         uses: LouisBrunner/checks-action@v1.6.0
         with:
-          token: ${{ secrets.ORG_PAT }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           name: 'CompositeA: Build & Test CompositeA'
           repo: 'opensafety/componentA'
           status: 'in_progress'
