@@ -1,0 +1,25 @@
+name: Build & Test CompositeA
+
+on:
+  pull_request:
+    branches: ['main']
+  workflow_dispatch: {}
+
+jobs:    
+  Build-And-Test-ComponentA:
+    runs-on: ubuntu-22.04    
+    timeout-minutes: 15
+    steps:
+      - name: Print GitHub Environment
+        run: echo '${{ toJSON(github) }}'
+      - name: Print Environment Variables
+        run: env | sort
+      - name: Checkout CompositeA
+        uses: actions/checkout@v2
+        with:
+          submodules: 'true'
+      - name: 'Report on Submodules'
+        run: |
+          set -x -e -o pipefail
+          exec 2>&1
+          git submodule foreach git log --pretty=oneline -n 5
