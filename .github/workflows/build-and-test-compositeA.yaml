@@ -28,6 +28,11 @@ jobs:
         with:
           app_id: ${{ secrets.AUTH_APP_ID }}
           private_key: ${{ secrets.AUTH_APP_PRIVATE_KEY }}
+      - name: Use token
+        env:
+          TOKEN: ${{ steps.generate_token.outputs.token }}
+        run: |
+          echo "The generated token is masked: ${TOKEN}"
       - name: 'Notify componentA of compositeA check start'
         uses: LouisBrunner/checks-action@v1.6.0
         with:
