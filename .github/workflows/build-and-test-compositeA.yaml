@@ -29,7 +29,7 @@ jobs:
           app_id: ${{ secrets.AUTH_APP_ID }}
           private_key: ${{ secrets.AUTH_APP_PRIVATE_KEY }}
       - name: Print outputs
-        run: echo '${{ toJSON(steps.generate_token) }}'
+        run: echo '${{ toJSON(steps) }}'
       - name: Use token
         env:
           TOKEN: ${{ steps.generate_token.outputs.token }}
