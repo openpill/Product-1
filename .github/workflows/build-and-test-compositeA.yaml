@@ -56,4 +56,6 @@ jobs:
           repo: 'opensafety/componentA'
           status: completed
           conclusion: success
+          # In case, the action was re-run, update the details link to the last instance...
+          details_url: 'https://www.github.com/opensafety/compositeA/actions/runs/${{ github.run_id }}'
           
