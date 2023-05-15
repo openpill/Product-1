@@ -39,7 +39,7 @@ jobs:
       - name: 'Notify componentA of compositeA check start'
         uses: LouisBrunner/checks-action@v1.6.0
         with:
-          sha: ${{ ( fromJSON(github.event.pull_request.body) ).component_pr.sha }}}
+          sha: ${{ fromJSON(github.event.pull_request.body).component_pr.sha }}}
           token: ${{ steps.generate_token.outputs.token }}
           name: 'CompositeA: Build & Test CompositeA'
           repo: 'opensafety/componentA'
