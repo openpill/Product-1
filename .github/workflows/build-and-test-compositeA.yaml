@@ -52,6 +52,7 @@ jobs:
         uses: LouisBrunner/checks-action@v1.6.0
         with:
           check_id: ${{ steps.check_start.outputs.check_id }}
+          token: ${{ steps.generate_token.outputs.token }}
           status: completed
           conclusion: success
           
