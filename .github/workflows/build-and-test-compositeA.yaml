@@ -53,6 +53,7 @@ jobs:
         with:
           check_id: ${{ steps.check_start.outputs.check_id }}
           token: ${{ steps.generate_token.outputs.token }}
+          repo: 'opensafety/componentA'
           status: completed
           conclusion: success
           
