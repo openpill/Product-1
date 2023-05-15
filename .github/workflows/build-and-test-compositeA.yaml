@@ -31,6 +31,7 @@ jobs:
           private_key: ${{ secrets.AUTH_APP_PRIVATE_KEY }}
       - name: 'Notify componentA of compositeA check start'
         uses: LouisBrunner/checks-action@v1.6.0
+        id: check_start
         with:
           sha: ${{ fromJSON(github.event.pull_request.body).component_pr.sha }}
           token: ${{ steps.generate_token.outputs.token }}
@@ -38,3 +39,19 @@ jobs:
           repo: 'opensafety/componentA'
           status: 'in_progress'
           details_url: 'https://www.github.com/opensafety/compositeA/actions/runs/${{ github.run_id }}'
+      
+      - name: 'Actually Do:  Build & Test CompositeA'
+        run: |
+          set -x -e -o pipefail
+          exec 2>&1
+          echo Hello world!!
+          sleep 2
+          echo Bie-bye world!!
+
+      - name: 'Notify componentA of compositeA check finish'
+        uses: LouisBrunner/checks-action@v1.6.0
+        with:
+          check_id: ${{ steps.check_start.outputs.check_id }}
+          status: completed
+          conclusion: success
+          
