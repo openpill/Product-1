@@ -11,7 +11,7 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: Print GitHub Environment
-        run: echo '${{ toJSON(github) }}'
+        run: echo \'${{ toJSON(github) }}\'
       - name: Print Environment Variables
         run: env | sort
       - name: Checkout CompositeA
