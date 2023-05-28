@@ -2,13 +2,15 @@ name: Build & Test CompositeA
 
 on:
   pull_request:
-    branches: ['main']
-  workflow_dispatch: {}
+  merge_group:
+    types:
+      - checks_requested
 
 jobs:    
   Build-And-Test-CompositeA:
     runs-on: ubuntu-22.04    
     timeout-minutes: 15
+    if: github.event_name == 'merge_group'
     steps:
       - name: Print GitHub Environment
         run: echo '${{ toJSON(github) }}'
@@ -39,7 +41,7 @@ jobs:
           repo: 'opensafety/componentA'
           status: 'in_progress'
           details_url: 'https://www.github.com/opensafety/compositeA/actions/runs/${{ github.run_id }}'
-      
+
       - name: 'Actually Do:  Build & Test CompositeA'
         run: |
           set -x -e -o pipefail
@@ -47,8 +49,16 @@ jobs:
           echo Hello world!!
           sleep 2
           echo Bie-bye world!!
+      - name: 'Notify self: waiting for component to finish other checks..'
+        uses: LouisBrunner/checks-action@v1.6.0
+        id: component_ready
+        with:
+          sha: ${{ github.sha }}
+          token: ${{ steps.generate_token.outputs.token }}
+          name: 'Component Ready'
+          status: 'in_progress'
 
-      - name: 'Notify componentA of compositeA check finish'
+      - name: 'Notify component of composite check finish'
         uses: LouisBrunner/checks-action@v1.6.0
         with:
           check_id: ${{ steps.check_start.outputs.check_id }}
@@ -58,4 +68,5 @@ jobs:
           conclusion: success
           # In case, the action was re-run, update the details link to the last instance...
           details_url: 'https://www.github.com/opensafety/compositeA/actions/runs/${{ github.run_id }}'
-          
+          # Let parent know what to report on when ready...
+          output: ${{toJSON(steps.component_ready.outputs)}}
