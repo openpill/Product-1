@@ -5,6 +5,8 @@ on:
   merge_group:
     types:
       - checks_requested
+    branches:
+      - main
 
 jobs:    
   Build-And-Test-CompositeA:
