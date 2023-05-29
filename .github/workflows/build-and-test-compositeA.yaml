@@ -23,10 +23,12 @@ jobs:
         with:
           submodules: 'true'
       - name: 'Report on Submodules'
+        id: submodules_info
         run: |
           set -x -e -o pipefail
           exec 2>&1
           git submodule foreach 'set -x && pwd && git status && git log -n 5'
+          echo MERGED_COMMIT_MESSAGE=`git show HEAD^2 --format=%s --no-patch` | tee -a $GITHUB_OUTPUT | jq C .
       - name: Generate GitHub App Token
         id: generate_token
         uses: tibdex/github-app-token@v1.7.0
@@ -38,7 +40,7 @@ jobs:
         id: check_start
         with:
           #sha: ${{ fromJSON(github.event.pull_request.body).component_pr.sha }}
-          sha: ${{ fromJSON(github.event.merge_group.head_commit.message).component_pr.sha }}
+          sha: ${{ fromJSON(steps.submodules_info.outputs.MERGED_COMMIT_MESSAGE).component_pr.sha }}
           token: ${{ steps.generate_token.outputs.token }}
           name: 'CompositeA: Build & Test CompositeA'
           repo: 'opensafety/componentA'
