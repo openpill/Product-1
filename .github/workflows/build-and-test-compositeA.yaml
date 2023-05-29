@@ -37,7 +37,8 @@ jobs:
         uses: LouisBrunner/checks-action@v1.6.0
         id: check_start
         with:
-          sha: ${{ fromJSON(github.event.pull_request.body).component_pr.sha }}
+          #sha: ${{ fromJSON(github.event.pull_request.body).component_pr.sha }}
+          sha: ${{ fromJSON(github.event.merge_group.head_commit.message).component_pr.sha }}
           token: ${{ steps.generate_token.outputs.token }}
           name: 'CompositeA: Build & Test CompositeA'
           repo: 'opensafety/componentA'
