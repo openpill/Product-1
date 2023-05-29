@@ -28,9 +28,10 @@ jobs:
           set -x -e -o pipefail
           exec 2>&1
           git status
-          git show HEAD
-          git submodule foreach 'set -x && pwd && git status && git log -n 5'
+          git show HEAD --format=%H --no-patch
           echo MERGED_COMMIT_MESSAGE=`git show HEAD^2 --format=%s --no-patch` | tee -a $GITHUB_OUTPUT | jq -C .
+          git submodule foreach 'set -x && pwd && git status && git log -n 5'
+          
       - name: Generate GitHub App Token
         id: generate_token
         uses: tibdex/github-app-token@v1.7.0
