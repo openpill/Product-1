@@ -29,7 +29,7 @@ jobs:
           exec 2>&1
           git status
           git show HEAD --format=%H --no-patch
-          echo MERGED_COMMIT_MESSAGE=`git show ${{ github.sha }}^2 --format=%s --no-patch` | tee -a $GITHUB_OUTPUT | jq -C .
+          echo MERGED_COMMIT_MESSAGE=`git show ${{ github.sha }}^2 --format=%s --no-patch` | tee -a $GITHUB_OUTPUT
           git submodule foreach 'set -x && pwd && git status && git log -n 5'
           
       - name: Generate GitHub App Token
