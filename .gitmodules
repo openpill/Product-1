@@ -1,3 +1,6 @@
 [submodule "components/componentA"]
 	path = some/path-1
 	url = ../componentA
+[submodule "some/path-2"]
+	path = some/path-2
+	url = ../componentB
